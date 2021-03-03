@@ -4,7 +4,8 @@ const path = require("path");
 const fs = require("fs");
 const { json } = require("express");
 const { stringify } = require("querystring");
-var count = 0;
+var uniqid = require('uniqid');
+
 
 // Sets up the Express App
 const app = express();
@@ -22,22 +23,27 @@ app.get('/assets/js/index.js', (req, res) => res.sendFile(path.join(__dirname, '
 app.get('/assets/css/styles.css', (req, res) => res.sendFile(path.join(__dirname, './assets/css/styles.css')));
 
 app.post('/api/notes', (req, res) => {
-    count++;
+    //adds new input to request body
     const newNote = req.body;
+    newNote.id = uniqid();
+    //logs newest input
     console.log(newNote);
 
-    // const addNewNote = JSON.stringify(newNote, null, 2);
-    // We then add the json the user sent to the character array
-    // appendToFile(addNewNote);
-  
+    //gets old inputs
     var db = require("../db/db.json");
 
+    //adds new note
     db.push(newNote);
+
+    //shows current notes
     console.log(db);
+
+    //stringifys
     const writeFile = JSON.stringify(db, null, 2);
+
+    //adds to db.json
     generateNotes(writeFile);
-    // We then display the JSON to the users
-    // res.json(newNote);
+
 });
 
 function generateNotes(notes) {
