@@ -13,7 +13,7 @@ Section | Description
 ## Screenshot
 ![Screenshot of working Note App](/assets/NoteApp.PNG)
 
-You can access the site via [this link](https://dry-spire-12530.herokuapp.com/notes)
+You can access the site via [this link](https://dry-spire-12530.herokuapp.com/)
 
 And you can access the GitHub Repo via [this link](https://github.com/kvtemadden/notes/)
 
