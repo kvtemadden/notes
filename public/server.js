@@ -44,11 +44,47 @@ app.post('/api/notes', (req, res) => {
     //adds to db.json
     generateNotes(writeFile);
 
+    return res.json(db);
+
+});
+
+app.delete('/api/notes/:id', (req, res) => {
+    //adds new input to request body
+    const selectedNote = req.params.id;
+    
+    //logs newest input
+    console.log(selectedNote);
+
+    //gets old inputs
+    var db = require("../db/db.json");
+
+    for (let i = 0; i < db.length; i++) {
+        if (selectedNote == db[i].id) {
+        console.log(db[i]);
+          db.splice(i, 1);
+        }
+      }
+
+    //shows current notes
+    console.log(db);
+
+    //stringifys
+    const writeFile = JSON.stringify(db, null, 2);
+
+    //adds to db.json
+    deletedNotes(writeFile);
+
+    return res.json(db);
 });
 
 function generateNotes(notes) {
     fs.writeFile("../db/db.json", notes, (err) =>
     err ? console.error(err) : console.log('New note added successfully!'));
+}
+
+function deletedNotes(notes) {
+    fs.writeFile("../db/db.json", notes, (err) =>
+    err ? console.error(err) : console.log('Note deleted successfully!'));
 }
 
 //Console logs active port
